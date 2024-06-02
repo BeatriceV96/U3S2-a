@@ -1,0 +1,54 @@
+<!---TASK NUMERO 1 - MOSTRARE LA LISTA DI TUTTI I POST PRESENTI NEL BLOG CON IL NOME DELL'AUTORE, bisogna incrociare e pescare per ogni autore-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>INCROCIO DI DATI (vedi console)</h1>
+
+    <script>
+
+        async function init(){   //faccio una funzione async, e faccio le due chiamate (nell'esempio il prof chiama tutti i post da playceholder LEZIONE POME LUNEDI 27/05 MIN 15:58)//
+             const postUrl =  'https://jsonplaceholder.typicode.com/posts' //questo e' il primo indirizzo per i posts
+             const userUrl = 'https://jsonplaceholder.typicode.com/users' //questo e' il primo indirizzo per gli users
+             //inizio a prepararmi per le fetch:
+
+            //  const postResponse = await fetch(postUrl).then(res => res.json()) //e' una forma breve, e dico 'fammi una fetch, converti in json e quando ha finito tutto il lavorio, 
+            //                                                                     //io nella response io avro' tutti i dati' (qui per i posts)
+            // const usertResponse = await fetch(userUrl).then(res => res.json()) //(qui per gli users)
+
+
+            //POSSO ANCHE TRATTARLE INSIEME UN UNICA VOLTA FINCHE USIAMO SOLO JS:
+
+            const [posts, users] = await Promise.all([
+                fetch(postUrl).then(res => res.json()),
+                fetch(userUrl).then(res => res.json())
+            ])
+  
+
+            //ora devo incrociare i dati: e inizio a ciclare i posts, USO MAP
+            //map mi serve quando voglio prendere post e renderlo modificato in base al suo stato inziale!!
+            let postConAutore = posts.map(p => { //per ogni p di posts eseguo un operazione 
+            let author = users.find(u => u.id == p.userId);  //FIND - qui dico: all'interno dell'array user, trova con FIND l'utente il cui id e' == p.userID,, qui sto dicendo "girati tuttin i 
+                                                            //user uno per uno, e mentre ciclo un post mi restituisci il post con quello user, utente"
+            p.author = author; //prendi p e dagli una nuova proprieta', tipo author che sara' uguale all'autore attuale.
+            return p; //MAP MI OBBLIGA A FARE RETURN di ogni risultato di ogni azione. QUINDI FINO AD ORA: usa p per trovare l'autore, crea dentro p una voce autore e ci salvi dentro autore
+                         //resituisci p modificato. SE DIMENTICO DI METTERE P, io ho un array di undefined, perche' sto restitendo undefined ad ogni giro
+
+            })  
+            console.log(postConAutore);  //vediamo il risulato in console e poi lancio la funzione init() altrimenti non parte
+                                        //se mi ciclo ora questo array in ANGULAR posso pescare author.name
+
+        } 
+
+        init()
+
+    </script>
+    
+</body>
+</html>

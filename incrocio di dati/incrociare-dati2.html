@@ -1,0 +1,39 @@
+<!--------QUI PER OGNI UTENTE RECUPRO TUTTI I POST CHE HA CREATO, assegno un array ad ogni utente-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+            <h1>POSTS PER AUTORE (vedi console)</h1>
+    <script>
+        async function init(){   //faccio una funzione async, e faccio le due chiamate (nell'esempio il prof chiama tutti i post da playceholder LEZIONE POME LUNEDI 27/05 MIN 15:58)//
+             const postUrl =  'https://jsonplaceholder.typicode.com/posts' //questo e' il primo indirizzo per i posts
+             const userUrl = 'https://jsonplaceholder.typicode.com/users'
+
+             const [posts, users] = await Promise.all([
+                fetch(postUrl).then(res => res.json()),
+                fetch(userUrl).then(res => res.json())
+            ])
+
+            //FIND - TROVO UN SOLO ELEMENTO
+            //FILTER - VOGLIO UN ARRAY DI ELEMENTI, TANTI
+
+            let postPerAutore = users.map(u => { //cicliamo tutti gli autori di post
+ 
+                const AllPosts =  posts.filter(p => p.userId == u.id) //tutti i posts di quell'autore. Ciclando tutti i posts fammi un filter e restituiscimi tutti i posts dello stesso autore
+                                                                     //tutti i posts che abbiano gli userId uguale u.id. "Mentre cicli tutti gli autori, fermati su ogni autore e 
+                                                                     // per ogni autore cerca all''interno della lista di posts TUTTI I POSTS CHE HANNO LO USERID UGUALE ALL'ID DELL'ATTUALE AUTORE/UISER"
+               u.posts = AllPosts;
+               return u;                                                     
+            })
+            console.log(postPerAutore);
+    }
+    init()
+
+    </script>
+</body>
+</html>
