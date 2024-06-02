@@ -1,0 +1,33 @@
+<!---faccio la stessa cosa che ho fatto nella home, e' codice ripetuto-->
+
+<div class="container">
+  <div class="row">
+    <div class="col-6 p-3 mb-2 mt-2" >
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">{{ post.name }}</h3>
+          <p class="card-text">{{ post.brand }}</p>
+          <p class="card-text">{{ post.price | currency }}</p>
+          <button
+          (click)="toggleStatus()"
+          class="btn btn-primary">Status: {{ post.available ? 'Available' : 'Not Available' }}</button>
+          <!--attivo un evento al <button> (click) e gli ho un metodo che chiamero'
+            "toggleStatus()" cosa fa lo dico nel .ts (vedi single-keyboard.ts) -->
+            <!---QUESTO ACCADE CON I BOTTONI E SI FA COSI-->
+
+
+            <!---MA SE USIAMO UN INPUT PER UNA CHECKBOX ALLORA DOBBIAMO USARE UN'ALTRA STRADA-->
+            <!--sugli input noi non gestiamo il click, ma il cambiamento di valore-->
+
+            <input type="checkbox" [(ngModel)]="post.available"> <!--e qui ci servira' il Two-wai Databinding che applichiamo
+            agli input, ngModel, permette di collegare questo input ad un proprieta del post, ma la checkbox e' ON/OFF, e dunque
+          l'unico parametro che si fresta e' un booleano-->
+              <!--attualmente sia l'iunoput che il buttoon sono legati, per usarne solo uno o l'altro,
+              commenta quello che non vuoi vedere visualizzato e fai lo stesso nel corrispettivo,
+            .ts-->
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+

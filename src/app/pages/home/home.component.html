@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6" *ngFor="let p of posts"><!--per ogni array keyboard crea un elemento p -->
+      <app-single-keyboard [post]="p"></app-single-keyboard><!--qui meto il mio oggetto ciclato
+        dentro il componente-->
+    </div>
+  </div>
+</div>
+
+<!---e' qui che interviene il two-way data binding, i dati sono nel service dalla riga
+dopo export-->
+
+<!--voglio aggiungere dopo il two-way data-binding, voglio vedere l'array in formato json
+per farlo: {{posts | json}}-->
